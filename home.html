@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -32,6 +32,8 @@
 
     <div class="scroll-progress"></div>
 
+    <div class="custom-cursor" id="custom-cursor" aria-hidden="true"></div>
+
     <canvas
       id="particles-canvas"
       class="particles-canvas"
@@ -53,6 +55,7 @@
           <ul class="nav-list">
             <li><a href="#pourquoi">L'Approche</a></li>
             <li><a href="#services">Services</a></li>
+            <li><a href="#realisations">Nos réalisations</a></li>
             <li><a href="#comment">Process</a></li>
             <li><a href="#temoignages">Avis</a></li>
             <li><a href="#contact" class="nav-cta">Obtenir un devis</a></li>
@@ -70,7 +73,14 @@
         <div class="hero-glow"></div>
         <div class="container hero-content">
           <h1 class="hero-title">
-            L'excellence de la propreté <br />au service de votre image.
+            <img
+              src="images/SPP-Logo-White-cropped.png"
+              alt="SPP"
+              class="hero-logo-inline"
+            />
+            là où <span class="hero-keyword">chaque détail</span> compte, la
+            <span class="hero-keyword">propreté</span> prend de la
+            <span class="hero-keyword">valeur</span>.
           </h1>
           <p class="hero-subtitle">
             Intervention experte pour bureaux, copropriétés et fins de chantier.
@@ -88,7 +98,9 @@
       <section class="section section-why" id="pourquoi">
         <div class="container">
           <div class="section-header reveal">
-            <h2 class="section-title">Pourquoi nous choisir ?</h2>
+            <h2 class="section-title">
+              Pourquoi nous <span class="section-keyword">choisir</span> ?
+            </h2>
             <p class="section-intro">
               Des engagements clairs qui font la différence au quotidien.
             </p>
@@ -237,7 +249,9 @@
       <section class="section section-services" id="services">
         <div class="container">
           <div class="section-header reveal">
-            <h2 class="section-title">Nos Prestations</h2>
+            <h2 class="section-title">
+              Nos <span class="section-keyword">Prestations</span>
+            </h2>
             <p class="section-intro">
               Des solutions techniques adaptées aux exigences des professionnels
               et particuliers.
@@ -417,24 +431,120 @@
                     />
                   </svg>
                 </div>
-                <div>
-                  <h3>Prestations sur mesure</h3>
-                  <p>
-                    Nous adaptons nos services à vos besoins spécifiques
-                    (sinistres, vitrerie accès difficile, etc).
-                  </p>
-                </div>
+                <h3>Prestations sur mesure</h3>
+                <p>
+                  Nous adaptons nos services à vos besoins spécifiques
+                  (sinistres, vitrerie accès difficile, etc).
+                </p>
               </div>
               <a href="#contact" class="btn-arrow">Demander →</a>
+            </div>
+
+            <div class="service-card reveal">
+              <div class="icon-box">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M3 6h18" />
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                  <line x1="10" y1="11" x2="10" y2="17" />
+                  <line x1="14" y1="11" x2="14" y2="17" />
+                </svg>
+              </div>
+              <h3>Débarras et encombrants</h3>
+              <p>
+                Évacuation des encombrants, objets en fin de vie et nettoyage
+                après travaux. Tri et évacuation dans les règles, pour
+                particuliers et professionnels.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-gallery" id="realisations">
+        <div class="noise-overlay"></div>
+
+        <div class="container">
+          <div class="section-header reveal">
+            <h2 class="section-title">
+              Nos <span class="section-keyword">Réalisations</span>
+            </h2>
+            <p class="section-intro">
+              La qualité se voit dans les détails. Quelques exemples de nos
+              interventions.
+            </p>
+          </div>
+
+          <div class="expand-gallery reveal">
+            <div class="expand-card active">
+              <img
+                src="images/Carroussel/IMG_5320.jpeg"
+                alt="Nettoyage de bureaux"
+                loading="lazy"
+              />
+              <div class="expand-content">
+                <div class="expand-icon">01</div>
+                <div class="expand-text">
+                  <h3>Espace & Volume</h3>
+                  <p>Un environnement sain pour repartir sur des bases neuves.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="expand-card">
+              <img
+                src="images/Carroussel/IMG_5322.jpeg"
+                alt="Nettoyage Vitrerie"
+                loading="lazy"
+              />
+              <div class="expand-content">
+                <div class="expand-icon">02</div>
+                <div class="expand-text">
+                  <h3>Sols & Surfaces</h3>
+                  <p>Traitement technique pour une brillance et une hygiène durables.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="expand-card">
+              <img
+                src="images/Carroussel/IMG_5327.jpeg"
+                alt="Fin de chantier"
+                loading="lazy"
+              />
+              <div class="expand-content">
+                <div class="expand-icon">03</div>
+                <div class="expand-text">
+                  <h3>Le Standard SPP</h3>
+                  <p>C'est à ça que ressemble un travail terminé. Rien de plus, rien de moins.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <section class="section section-process" id="comment">
+        <div class="process-bg-glow">
+          <div class="orb orb-1"></div>
+          <div class="orb orb-2"></div>
+        </div>
+        <div class="noise-overlay"></div>
         <div class="container">
           <div class="section-header reveal">
-            <h2 class="section-title">Comment ça marche ?</h2>
+            <h2 class="section-title">
+              Comment ça <span class="section-keyword">marche</span> ?
+            </h2>
             <p class="section-intro">
               Un processus simplifié pour une intervention rapide.
             </p>
@@ -554,7 +664,9 @@
       <section class="section section-testimonials" id="temoignages">
         <div class="container">
           <div class="section-header reveal">
-            <h2 class="section-title">Ils nous font confiance</h2>
+            <h2 class="section-title">
+              Ils nous font <span class="section-keyword">confiance</span>
+            </h2>
             <p class="section-intro">
               La satisfaction de nos partenaires est notre meilleure publicité.
             </p>
@@ -610,10 +722,19 @@
         <div class="container">
           <div class="contact-layout">
             <div class="contact-info reveal">
-              <h2 class="contact-title">Parlons de votre projet</h2>
+              <h2 class="contact-title">
+                Parlons de votre <span class="section-keyword">projet</span>
+              </h2>
               <p class="contact-desc">
                 Une question ? Une demande urgente ?<br />
-                Nous intervenons dans toute la <strong>Haute-Normandie</strong>.
+                Nous intervenons dans toute la
+                <a
+                  href="https://www.google.com/maps/search/Haute-Normandie"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="contact-map-link"
+                  ><strong>Haute-Normandie</strong></a
+                >.
               </p>
 
               <div class="contact-cards">
@@ -664,7 +785,12 @@
                   </div>
                 </a>
 
-                <div class="contact-item no-hover">
+                <a
+                  href="https://www.google.com/maps/search/Haute-Normandie"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="contact-item"
+                >
                   <div class="contact-icon">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -687,7 +813,7 @@
                     <span class="label">Zone d'intervention</span>
                     <strong class="value">Haute-Normandie</strong>
                   </div>
-                </div>
+                </a>
               </div>
             </div>
 
@@ -770,6 +896,7 @@
             <h4>Navigation</h4>
             <ul class="footer-nav">
               <li><a href="#services">Nos Services</a></li>
+              <li><a href="#realisations">Nos réalisations</a></li>
               <li><a href="#pourquoi">Pourquoi nous</a></li>
               <li><a href="#temoignages">Avis Clients</a></li>
             </ul>

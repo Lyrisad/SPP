@@ -46,6 +46,49 @@ body {
   overflow-x: hidden;
 }
 
+/* Curseur personnalisé : petit rond vert (souris uniquement) */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+
+  .custom-cursor {
+    position: fixed;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary);
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 12px var(--primary);
+    transition: transform 0.08s ease-out, width 0.2s, height 0.2s, border 0.2s, box-shadow 0.2s;
+  }
+
+  /* --- Mode pointer (sur liens, boutons, éléments cliquables) --- */
+  /* Variante 1 : Rond qui grossit + anneau (actuelle) */
+  .custom-cursor.is-pointer {
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--primary);
+    background: rgba(0, 210, 106, 0.2);
+    box-shadow: 0 0 20px var(--primary), inset 0 0 12px rgba(0, 210, 106, 0.2);
+  }
+
+  /* Autres idées (décommenter pour tester) :
+  Variante 2 : Carré arrondi
+  .custom-cursor.is-pointer { width: 24px; height: 24px; border-radius: 6px; }
+  Variante 3 : Cercle plein qui pulse (scale)
+  .custom-cursor.is-pointer { width: 24px; height: 24px; animation: cursor-pulse 1s ease infinite; }
+  @keyframes cursor-pulse { 50% { transform: translate(-50%, -50%) scale(1.2); } }
+  Variante 4 : Petit doigt (via pseudo ::after en forme de rectangle incliné)
+  */
+  .custom-cursor.is-hidden {
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+}
+
 /* ============================================
    PRELOADER (Écran de chargement Premium)
    ============================================ */
@@ -391,6 +434,22 @@ h3 {
   padding-bottom: 10px;
 }
 
+.hero-title .hero-logo-inline {
+  display: inline-block;
+  height: 0.95em;
+  width: auto;
+  vertical-align: -0.15em;
+  -webkit-text-fill-color: unset;
+  background: none;
+}
+
+.hero-title .hero-keyword {
+  color: var(--primary);
+  -webkit-text-fill-color: var(--primary);
+  background: none;
+  font-weight: 700;
+}
+
 .hero-subtitle {
   font-size: 1.15rem;
   color: var(--text-muted);
@@ -433,6 +492,14 @@ h3 {
   -webkit-text-fill-color: transparent;
 
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.5));
+}
+
+/* Mot clé en vert dans les titres de section */
+.section-title .section-keyword {
+  color: var(--primary);
+  -webkit-text-fill-color: var(--primary);
+  background: none;
+  font-weight: 800;
 }
 
 /* Le petit trait vert lumineux sous le titre */
@@ -525,6 +592,15 @@ h3 {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
+
+@media (min-width: 900px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .service-card-wide {
+    grid-column: span 2;
+  }
+}
 .service-card {
   position: relative;
   padding: 2rem;
@@ -556,11 +632,162 @@ h3 {
   color: var(--text-muted);
 }
 
-/* --- Process Section (Refonte) --- */
+/* ============================================
+   GALERIE ACCORDÉON (Pour 3 images)
+   ============================================ */
+
+   .section-gallery {
+    position: relative;
+    background-color: var(--bg-dark);
+    padding-bottom: 8rem;
+    overflow: hidden;
+  }
+  
+  /* Conteneur principal */
+  .expand-gallery {
+    display: flex;
+    height: 500px; /* Hauteur imposante pour faire "Architecture" */
+    width: 100%;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  /* La Carte (Panneau) */
+  .expand-card {
+    position: relative;
+    height: 100%;
+    flex: 1; /* Par défaut, tout le monde a la taille 1 */
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: flex 0.7s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animation fluide "Apple" */
+    border: 1px solid var(--glass-border);
+  }
+  
+  /* L'image de fond */
+  .expand-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+    filter: brightness(0.6) grayscale(20%); /* Un peu sombre par défaut */
+  }
+  
+  /* --- L'INTERACTION MAGIQUE --- */
+  
+  /* Quand on survole une carte, elle grandit (flex: 3) */
+  .expand-card:hover {
+    flex: 3; /* Elle prend 3x plus de place que les autres */
+    border-color: var(--gold);
+  }
+  
+  /* On ré-éclaire l'image au survol */
+  .expand-card:hover img {
+    transform: scale(1.1); /* Zoom lent */
+    filter: brightness(0.9) grayscale(0%);
+  }
+  
+  /* Contenu (Texte en bas) */
+  .expand-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+  }
+  
+  .expand-card:hover .expand-content {
+    opacity: 1;
+  }
+  
+  /* Numéro (01, 02...) */
+  .expand-icon {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    transform: translateY(0);
+    transition: transform 0.5s;
+  }
+  
+  /* Texte (Titre + Desc) */
+  .expand-text {
+    opacity: 0; /* Caché quand la carte est petite */
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+    /* On force le texte à ne pas se casser quand c'est petit */
+    white-space: nowrap; 
+  }
+  
+  .expand-text h3 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+  
+  .expand-text p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+  
+  /* --- APPARITION DU TEXTE --- */
+  /* Le texte n'apparaît QUE quand la carte est survolée (agrandie) */
+  .expand-card:hover .expand-text {
+    opacity: 1;
+    transform: translateY(0);
+    white-space: normal; /* Autorise le retour à la ligne une fois grand */
+  }
+  
+  .expand-card:hover .expand-icon {
+    transform: translateY(-5px);
+    color: var(--gold); /* Le numéro passe au doré */
+  }
+  
+  
+  /* --- VERSION MOBILE --- */
+  @media (max-width: 900px) {
+    .expand-gallery {
+      flex-direction: column; /* On empile verticalement */
+      height: auto;
+      gap: 1.5rem;
+    }
+  
+    .expand-card {
+      width: 100%;
+      height: 300px; /* Hauteur fixe par carte */
+      flex: none !important; /* On désactive l'effet accordéon sur mobile */
+    }
+    
+    /* Sur mobile, on affiche tout le temps le texte */
+    .expand-text {
+      opacity: 1;
+      transform: translateY(0);
+      white-space: normal;
+    }
+    
+    .expand-card img {
+      filter: brightness(0.7);
+    }
+  }
+
+/* --- Process Section (Correction Anti-Banding) --- */
 .section-process {
-  background: radial-gradient(circle at center, #0f0f0f 0%, #000000 100%);
+  /* On garde un fond noir uni ou très sombre, le bruit fera le reste */
+    background: radial-gradient(circle at center, #0f0f0f 0%, #050505 30%);
+  background-color: #050505; 
   position: relative;
   overflow: hidden;
+  padding: 10rem 0;
+  
+  /* On supprime l'ancien masque qui causait les traits */
+  mask-image: none;
+  -webkit-mask-image: none;
 }
 
 /* Grille des étapes (3 colonnes + flèches) */
@@ -582,7 +809,7 @@ h3 {
   padding: 2rem;
   text-align: center;
   position: relative;
-  transition: var(--transition);
+  transition: 200ms !important;
 }
 
 .step-card:hover {
@@ -718,32 +945,32 @@ h3 {
 
 /* --- Spécifique Services --- */
 
-/* Sur les grands écrans, la carte "Sur Mesure" prend toute la largeur */
+/* Sur les grands écrans : carte "Sur Mesure" 2 colonnes + dégradé + bouton Demander */
 @media (min-width: 768px) {
   .service-card-wide {
-    grid-column: 1 / -1; /* S'étend sur toute la ligne */
+    grid-column: span 2;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: linear-gradient(
       90deg,
       var(--bg-card) 0%,
-      rgba(0, 210, 106, 0.05) 100%
+      rgba(0, 210, 105, 0.048) 100%
     );
   }
 
   .service-content-wide {
     display: flex;
-    align-items: center;
-    gap: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
   }
 
   .service-content-wide .icon-box {
-    margin-bottom: 0; /* On enlève la marge du bas car on est en flex horizontal */
+    margin-bottom: 1rem;
   }
 }
 
-/* Petit lien "Demander" stylisé dans la carte large */
 .btn-arrow {
   color: var(--primary);
   font-weight: 700;
@@ -751,11 +978,13 @@ h3 {
   padding: 0.5rem 1rem;
   border-radius: 8px;
   transition: var(--transition);
+  white-space: nowrap;
+  align-self: flex-end;
 }
 
 .btn-arrow:hover {
-  background: rgba(0, 210, 106, 0.1);
-  transform: translateX(5px); /* Petite animation vers la droite */
+  background: rgba(0, 210, 106, 0.15);
+  transform: translateX(5px);
 }
 
 /* --- Testimonials (Design Premium) --- */
@@ -897,6 +1126,11 @@ h3 {
   color: #fff;
 }
 
+.contact-title .section-keyword {
+  color: var(--primary);
+  font-weight: 800;
+}
+
 .contact-desc {
   font-size: 1.1rem;
   color: var(--text-muted);
@@ -907,6 +1141,20 @@ h3 {
 .contact-desc strong {
   color: #fff;
   font-weight: 600;
+}
+
+.contact-map-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-map-link:hover {
+  color: var(--primary);
+}
+
+.contact-map-link strong {
+  color: inherit;
 }
 
 /* Cartes Contact (Tel, Mail, Loc) */
@@ -925,6 +1173,8 @@ h3 {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   transition: var(--transition);
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Effet interactif sauf pour la localisation */

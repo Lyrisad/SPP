@@ -211,4 +211,55 @@
     if (particles.length === 0) createParticles();
     draw();
   })();
+
+  // --- 6. Curseur personnalisé (petit rond vert) ---
+  (function initCustomCursor() {
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
+    const cursor = document.getElementById("custom-cursor");
+    if (!cursor) return;
+
+    const pointerSelector =
+      "a, button, [role='button'], input[type='submit'], input[type='button'], .btn, .contact-item, .burger, .contact-map-link, [onclick]";
+
+    let visible = false;
+    let x = 0;
+    let y = 0;
+
+    function move(e) {
+      x = e.clientX;
+      y = e.clientY;
+      if (!visible) {
+        visible = true;
+        cursor.classList.remove("is-hidden");
+      }
+      cursor.style.left = x + "px";
+      cursor.style.top = y + "px";
+
+      const target = e.target;
+      const isPointer =
+        target.closest(pointerSelector) ||
+        getComputedStyle(target).cursor === "pointer";
+      cursor.classList.toggle("is-pointer", !!isPointer);
+    }
+
+    function leave() {
+      visible = false;
+      cursor.classList.add("is-hidden");
+      cursor.classList.remove("is-pointer");
+    }
+
+    function enter() {
+      visible = true;
+      cursor.classList.remove("is-hidden");
+    }
+
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseleave", leave);
+    document.addEventListener("mouseenter", enter);
+
+    cursor.style.left = "0px";
+    cursor.style.top = "0px";
+  })();
+  
 })();
