@@ -88,8 +88,7 @@
           </p>
           <div class="hero-buttons">
             <a href="#contact" class="btn btn-primary"
-              >Demander un devis gratuit</a
-            >
+              >Demander un devis gratuit</a>
             <a href="#services" class="btn btn-secondary">Voir nos services</a>
           </div>
         </div>
@@ -467,7 +466,6 @@
               </div>
               <a href="#contact" class="btn-arrow">Demander →</a>
             </div>
-
           </div>
         </div>
       </section>
@@ -497,7 +495,9 @@
                 <div class="expand-icon">01</div>
                 <div class="expand-text">
                   <h3>Espace & Volume</h3>
-                  <p>Un environnement sain pour repartir sur des bases neuves.</p>
+                  <p>
+                    Un environnement sain pour repartir sur des bases neuves.
+                  </p>
                 </div>
               </div>
             </div>
@@ -512,7 +512,10 @@
                 <div class="expand-icon">02</div>
                 <div class="expand-text">
                   <h3>Sols & Surfaces</h3>
-                  <p>Traitement technique pour une brillance et une hygiène durables.</p>
+                  <p>
+                    Traitement technique pour une brillance et une hygiène
+                    durables.
+                  </p>
                 </div>
               </div>
             </div>
@@ -527,7 +530,10 @@
                 <div class="expand-icon">03</div>
                 <div class="expand-text">
                   <h3>Le Standard SPP</h3>
-                  <p>C'est à ça que ressemble un travail terminé. Rien de plus, rien de moins.</p>
+                  <p>
+                    C'est à ça que ressemble un travail terminé. Rien de plus,
+                    rien de moins.
+                  </p>
                 </div>
               </div>
             </div>
@@ -819,25 +825,41 @@
             </div>
 
             <form id="form" class="glass-form reveal" action="#" method="post">
-              <h3 class="form-title">Demande de devis gratuit</h3>
+              <input
+                type="hidden"
+                name="_subject"
+                value="📢 Nouveau Devis - Site SPP"
+              />
+              <h3 class="form-title">
+                <span class="form-title-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                  </svg>
+                </span>
+                Demande de devis<span class="section-keyword">gratuit</span>
+              </h3>
 
               <div class="form-group">
-                <label for="name">Nom / Entreprise</label>
+                <label for="name">Nom / Entreprise <span class="required-star">*</span></label>
                 <input
                   type="text"
                   id="name"
-                  name="name"
+                  name="Client"
                   required
                   placeholder="Votre nom"
                 />
               </div>
 
               <div class="form-group">
-                <label for="phone">Téléphone</label>
+                <label for="phone">Téléphone <span class="required-star">*</span></label>
                 <input
                   type="tel"
                   id="phone"
-                  name="phone"
+                  name="Telephone"
                   required
                   placeholder="07 83 49 28 28"
                 />
@@ -849,10 +871,11 @@
                   id="message"
                   name="message"
                   rows="4"
-                  required
                   placeholder="Surface, type de nettoyage, fréquence..."
                 ></textarea>
               </div>
+
+              <p class="form-required-note">Les champs marqués d'un <span class="required-star">*</span> sont obligatoires.</p>
 
               <button type="submit" class="btn btn-primary btn-full">
                 Obtenir mon devis
@@ -967,7 +990,28 @@
         </div>
       </div>
     </div>
-
+    <div id="toast-notification" class="toast">
+      <div class="toast-icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      </div>
+      <div class="toast-content">
+        <h4>Demande envoyée avec succès !</h4>
+        <div id="toast-summary"></div>
+      </div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>

@@ -83,31 +83,95 @@
 
   revealElements.forEach((el) => revealObserver.observe(el));
 
-  // --- 3. Gestion du Formulaire (Simulation) ---
-  const form = document.querySelector("form");
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const btn = form.querySelector('button[type="submit"]');
-      const originalText = btn.textContent;
+// --- 3. Gestion du Formulaire (Loading + Notif Récap) ---
+const form = document.querySelector('form');
+const toast = document.getElementById('toast-notification');
+const toastSummary = document.getElementById('toast-summary');
 
-      btn.textContent = "Envoi...";
-      btn.style.opacity = "0.7";
+if (form) {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const btn = form.querySelector('button[type="submit"]');
+    const originalText = btn.innerHTML; // On sauvegarde le texte initial
+    
+    // 1. DÉBUT DU CHARGEMENT
+    // On ajoute la classe CSS qui fait tourner le petit rond
+    btn.classList.add('loading');
+    btn.disabled = true;
 
-      setTimeout(() => {
-        btn.textContent = "Message envoyé !";
-        btn.style.background = "#00D26A";
-        btn.style.color = "#000";
+    // On récupère les données pour le récapitulatif AVANT l'envoi
+    const formData = new FormData(form);
+    const messageValue = formData.get('message');
+    if (!messageValue || !String(messageValue).trim()) {
+      formData.set('message', 'Aucune description renseignée');
+    }
+    const clientName = formData.get('Client');     // Correspond au name="Client" du HTML
+    const clientPhone = formData.get('Telephone'); // Correspond au name="Telephone"
+    
+    try {
+      // 2. ENVOI VERS FORMSPREE
+      const response = await fetch("https://formspree.io/f/xdazyyee", { 
+        method: "POST",
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        // 3. SUCCÈS
+        
+        // A. On arrête le loading et on change le bouton
+        btn.classList.remove('loading');
+        btn.textContent = 'Demande envoyée !';
+        btn.style.background = '#00D26A';
+        btn.style.color = '#000';
+        
+        // B. On construit le petit résumé HTML
+        toastSummary.innerHTML = `
+          <div class="toast-recap">
+            <strong>Nom :</strong> ${clientName}<br>
+            <strong>Tél :</strong> ${clientPhone}<br>
+            <em>Nous vous recontacterons sous 24h.</em>
+          </div>
+        `;
+
+        // C. On affiche la notification (Toast)
+        if (toast) toast.classList.add('show');
+
+        // D. Reset du formulaire
         form.reset();
 
+        // E. On cache tout après quelques secondes
         setTimeout(() => {
-          btn.textContent = originalText;
-          btn.style = "";
-        }, 3000);
-      }, 1500);
-    });
-  }
+          // Cacher la notif après 6 secondes
+          if (toast) toast.classList.remove('show');
+          
+          // Remettre le bouton normal après 4 secondes
+          btn.innerHTML = originalText;
+          btn.style = '';
+          btn.disabled = false;
+        }, 6000);
 
+      } else {
+        throw new Error('Erreur Formspree');
+      }
+
+    } catch (error) {
+      // 4. ERREUR
+      console.error(error);
+      btn.classList.remove('loading');
+      btn.textContent = 'Erreur... Réessayez.';
+      btn.style.background = '#ff4444';
+      btn.style.color = '#fff';
+      
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style = '';
+        btn.disabled = false;
+      }, 3000);
+    }
+  });
+}
   // --- 4. Pastille contact sticky ---
   const contactPillTrigger = document.getElementById("contact-pill-trigger");
   if (contactPill && contactPillTrigger) {
