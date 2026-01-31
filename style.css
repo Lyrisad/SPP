@@ -957,6 +957,13 @@ h3 {
   66% { transform: translateY(0); }
 }
 
+/* Sur téléphone : pas d'animation monter/descendre */
+@media (max-width: 768px) {
+  .process-steps-grid .step-card {
+    animation: none;
+  }
+}
+
 /* Numéro en gros (Watermark style) */
 .step-number {
   font-size: 3.5rem;
@@ -2111,4 +2118,281 @@ body.modal-magnifier-active .custom-cursor {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* ============================================
+   SECTION À PROPOS (About Us)
+   ============================================ */
+
+   .section-about {
+    position: relative;
+    /* Pas de background ici = transparent, donc on voit les étoiles */
+  }
+  
+  .about-grid {
+    margin-top: -1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  @media (min-width: 900px) {
+    .about-grid {
+      grid-template-columns: 1.1fr 0.9fr; /* Plus de place pour le texte */
+    }
+  }
+
+  .about-text-body {
+    text-align: left;
+  }
+  
+  /* Typographie du texte */
+  .about-text-body p {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+  }
+  
+  .about-text-body strong {
+    color: #fff;
+    font-weight: 600;
+  }
+  
+  .highlight-p {
+    font-size: 1.25rem !important;
+    color: #fff !important;
+    font-weight: 500;
+    border-left: 3px solid var(--primary);
+    padding-left: 1.5rem;
+  }
+  
+  .text-gold {
+    color: var(--gold);
+    font-weight: 600;
+  }
+  
+  /* Citation finale style signature */
+  .about-quote {
+    margin-top: 2rem;
+    font-family: serif; /* Police différente pour le style */
+    font-size: 1.12rem;
+    color: #fff;
+    font-style: italic;
+    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--glass-border);
+  }
+  
+  /* Image Wrapper */
+  .about-image-wrapper {
+    position: relative;
+  }
+  
+  .about-image-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    border: 1px solid var(--glass-border);
+    transform: rotate(2deg); /* Petite rotation stylée */
+    transition: transform 0.5s ease;
+  }
+  
+  .about-image-card:hover {
+    transform: rotate(0deg) scale(1.02);
+    border-color: var(--gold);
+  }
+  
+  .about-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: grayscale(20%) contrast(1.1); /* Look premium */
+  }
+  
+  /* Badge flottant sur l'image */
+  .about-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(5, 5, 5, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 0.75rem 1.25rem;
+    border-radius: 50px;
+    border: 1px solid var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  }
+  
+  .badge-icon {
+    color: var(--gold);
+    font-size: 1.2rem;
+  }
+  
+  /* Mobile responsive adjustments */
+  @media (max-width: 900px) {
+    .about-image-card {
+      transform: rotate(0deg);
+      max-height: 300px;
+    }
+    .about-img {
+      height: 300px;
+      width: 100%;
+      object-fit: cover;
+    }
+    .highlight-p {
+      padding-left: 1rem;
+      font-size: 1.1rem !important;
+    }
+  }
+
+  /* ============================================
+   FAQ SECTION (Accordéon)
+   ============================================ */
+
+.section-faq {
+  position: relative;
+  padding: 6rem 0;
+}
+
+.section-faq .noise-overlay {
+  pointer-events: none;
+}
+
+.faq-grid {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.faq-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  position: relative;
+  border-left: 3px solid transparent;
+}
+
+.faq-item:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* État ouvert (faq-open pour ne pas conflit avec .reveal.active) */
+.faq-item.faq-open {
+  border-left-color: var(--primary);
+  border-color: rgba(0, 210, 106, 0.25);
+  box-shadow: 0 8px 32px rgba(0, 210, 106, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.faq-question {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.faq-question span:first-child {
+  flex: 1;
+}
+
+.faq-question:hover {
+  color: var(--primary);
+}
+
+.faq-item.faq-open .faq-question {
+  color: var(--primary);
+}
+
+/* Icône + qui devient × à l'ouverture — centrage via pseudo-élément */
+.faq-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  font-size: 0;
+  padding: 0;
+  color: var(--primary);
+  background: rgba(0, 210, 106, 0.15);
+  border-radius: 8px;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.faq-icon::before {
+  content: "+";
+  display: block;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  font-size: 1.35rem;
+  font-weight: 300;
+  text-align: center;
+  color: inherit;
+  margin-bottom: 5px;
+}
+
+.faq-question:hover .faq-icon {
+  background: rgba(0, 210, 106, 0.25);
+}
+
+.faq-item.faq-open .faq-icon {
+  transform: rotate(45deg);
+  background: var(--gold);
+  color: #fff;
+}
+
+/* Réponse (cachée par défaut) */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faq-content {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  font-size: 0.95rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.faq-item.faq-open .faq-content {
+  border-top-color: rgba(0, 210, 106, 0.15);
+}
+
+.faq-content p {
+  margin: 0;
+  padding-top: 0.25rem;
+}
+
+.faq-content strong {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
 }

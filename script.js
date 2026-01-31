@@ -418,5 +418,43 @@ if (form) {
       if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
     });
   })();
+
+  // --- 8. Gestion de la FAQ (Accordéon) ---
+  // On utilise la classe "faq-open" pour éviter le conflit avec .reveal.active (scroll)
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    if (!question || !answer) return;
+
+    question.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpen = item.classList.contains('faq-open');
+
+      // Fermer les autres
+      faqItems.forEach(other => {
+        if (other === item) return;
+        if (other.classList.contains('faq-open')) {
+          other.classList.remove('faq-open');
+          const q = other.querySelector('.faq-question');
+          const a = other.querySelector('.faq-answer');
+          if (q) q.setAttribute('aria-expanded', 'false');
+          if (a) a.style.maxHeight = '';
+        }
+      });
+
+      if (isOpen) {
+        item.classList.remove('faq-open');
+        question.setAttribute('aria-expanded', 'false');
+        answer.style.maxHeight = '';
+      } else {
+        item.classList.add('faq-open');
+        question.setAttribute('aria-expanded', 'true');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    });
+  });
   
 })();
