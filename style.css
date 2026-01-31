@@ -1752,8 +1752,23 @@ h3 {
   padding: 1.25rem 1.5rem;
 }
 
+.contact-pill-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.contact-pill-logo {
+  height: 15px;
+  width: auto;
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
 .contact-pill-title {
-  margin: 0 0 1rem;
+  margin: 0;
   font-size: 1rem;
   font-weight: 700;
   color: #fff;
