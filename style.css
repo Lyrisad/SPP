@@ -99,7 +99,12 @@ body {
     z-index: 99998;
     transform: translate(-50%, -50%);
     box-shadow: 0 0 12px var(--primary);
-    transition: transform 0.08s ease-out, width 0.2s, height 0.2s, border 0.2s, box-shadow 0.2s;
+    transition:
+      transform 0.08s ease-out,
+      width 0.2s,
+      height 0.2s,
+      border 0.2s,
+      box-shadow 0.2s;
   }
 
   /* --- Mode pointer (sur liens, boutons, éléments cliquables) --- */
@@ -109,7 +114,9 @@ body {
     height: 32px;
     border: 2px solid var(--primary);
     background: rgba(0, 210, 106, 0.2);
-    box-shadow: 0 0 20px var(--primary), inset 0 0 12px rgba(0, 210, 106, 0.2);
+    box-shadow:
+      0 0 20px var(--primary),
+      inset 0 0 12px rgba(0, 210, 106, 0.2);
   }
 
   /* Autres idées (décommenter pour tester) :
@@ -721,7 +728,7 @@ h3 {
    GALERIE ACCORDÉON (Avec Grille & Watermark)
    ============================================ */
 
- /* ============================================
+/* ============================================
    GALERIE AVEC QUADRILLAGE "SPOTLIGHT"
    ============================================ */
 
@@ -734,22 +741,29 @@ h3 {
 
 /* LE QUADRILLAGE (Dans un pseudo-élément pour le masquer) */
 .section-gallery::before {
-  content: '';
+  content: "";
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
   /* 1. Le dessin de la grille (lignes fines grises) */
-  background-image: 
+  background-image:
     linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 60px 60px; /* Taille des carreaux */
   background-position: center center;
-  
+
   /* 2. LE MASQUE CIRCULAIRE (La magie est ici) */
   /* On dit : "Visible au centre (black), Transparent sur les bords" */
-  -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    black 0%,
+    transparent 70%
+  );
   mask-image: radial-gradient(circle at center, black 0%, transparent 70%);
-  
+
   z-index: 0;
   pointer-events: none;
 }
@@ -759,157 +773,156 @@ h3 {
   position: relative;
   z-index: 1;
 }
-  
-  /* On s'assure que le contenu passe DEVANT le texte géant */
-  .section-gallery .container {
-    position: relative;
-    z-index: 1;
-  }
-  
-  /* ... (Garde le reste du CSS de .expand-gallery, .expand-card etc. inchangé en dessous) ... */
-  
-  /* Conteneur principal */
+
+/* On s'assure que le contenu passe DEVANT le texte géant */
+.section-gallery .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ... (Garde le reste du CSS de .expand-gallery, .expand-card etc. inchangé en dessous) ... */
+
+/* Conteneur principal */
+.expand-gallery {
+  display: flex;
+  height: 500px; /* Hauteur imposante pour faire "Architecture" */
+  width: 100%;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* La Carte (Panneau) */
+.expand-card {
+  position: relative;
+  height: 100%;
+  flex: 1; /* Par défaut, tout le monde a la taille 1 */
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: flex 0.7s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animation fluide "Apple" */
+  border: 1px solid var(--glass-border);
+}
+
+/* L'image de fond */
+.expand-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+  filter: brightness(0.6) grayscale(20%); /* Un peu sombre par défaut */
+}
+
+/* --- L'INTERACTION MAGIQUE --- */
+
+/* Quand on survole une carte, elle grandit (flex: 3) */
+.expand-card:hover {
+  flex: 3; /* Elle prend 3x plus de place que les autres */
+  border-color: var(--gold);
+}
+
+/* On ré-éclaire l'image au survol */
+.expand-card:hover img {
+  transform: scale(1.1); /* Zoom lent */
+  filter: brightness(0.9) grayscale(0%);
+}
+
+/* Contenu (Texte en bas) */
+.expand-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.expand-card:hover .expand-content {
+  opacity: 1;
+}
+
+/* Numéro (01, 02...) */
+.expand-icon {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  transform: translateY(0);
+  transition: transform 0.5s;
+}
+
+/* Texte (Titre + Desc) */
+.expand-text {
+  opacity: 0; /* Caché quand la carte est petite */
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+  /* On force le texte à ne pas se casser quand c'est petit */
+  white-space: nowrap;
+}
+
+.expand-text h3 {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+
+.expand-text p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* --- APPARITION DU TEXTE --- */
+/* Le texte n'apparaît QUE quand la carte est survolée (agrandie) */
+.expand-card:hover .expand-text {
+  opacity: 1;
+  transform: translateY(0);
+  white-space: normal; /* Autorise le retour à la ligne une fois grand */
+}
+
+.expand-card:hover .expand-icon {
+  transform: translateY(-5px);
+  color: var(--gold); /* Le numéro passe au doré */
+}
+
+/* --- VERSION MOBILE --- */
+@media (max-width: 900px) {
   .expand-gallery {
-    display: flex;
-    height: 500px; /* Hauteur imposante pour faire "Architecture" */
-    width: 100%;
-    gap: 1rem;
-    margin-top: 2rem;
+    flex-direction: column; /* On empile verticalement */
+    height: auto;
+    gap: 1.5rem;
   }
-  
-  /* La Carte (Panneau) */
+
   .expand-card {
-    position: relative;
-    height: 100%;
-    flex: 1; /* Par défaut, tout le monde a la taille 1 */
-    border-radius: 20px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: flex 0.7s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animation fluide "Apple" */
-    border: 1px solid var(--glass-border);
-  }
-  
-  /* L'image de fond */
-  .expand-card img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.7s ease;
-    filter: brightness(0.6) grayscale(20%); /* Un peu sombre par défaut */
+    height: 300px; /* Hauteur fixe par carte */
+    flex: none !important; /* On désactive l'effet accordéon sur mobile */
   }
-  
-  /* --- L'INTERACTION MAGIQUE --- */
-  
-  /* Quand on survole une carte, elle grandit (flex: 3) */
-  .expand-card:hover {
-    flex: 3; /* Elle prend 3x plus de place que les autres */
-    border-color: var(--gold);
-  }
-  
-  /* On ré-éclaire l'image au survol */
-  .expand-card:hover img {
-    transform: scale(1.1); /* Zoom lent */
-    filter: brightness(0.9) grayscale(0%);
-  }
-  
-  /* Contenu (Texte en bas) */
-  .expand-content {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 2rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    opacity: 0.8;
-    transition: opacity 0.3s;
-  }
-  
-  .expand-card:hover .expand-content {
-    opacity: 1;
-  }
-  
-  /* Numéro (01, 02...) */
-  .expand-icon {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--primary);
-    margin-bottom: 0.5rem;
-    transform: translateY(0);
-    transition: transform 0.5s;
-  }
-  
-  /* Texte (Titre + Desc) */
+
+  /* Sur mobile, on affiche tout le temps le texte */
   .expand-text {
-    opacity: 0; /* Caché quand la carte est petite */
-    transform: translateY(20px);
-    transition: all 0.5s ease;
-    /* On force le texte à ne pas se casser quand c'est petit */
-    white-space: nowrap; 
-  }
-  
-  .expand-text h3 {
-    font-size: 1.5rem;
-    color: #fff;
-    margin-bottom: 0.25rem;
-  }
-  
-  .expand-text p {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-  }
-  
-  /* --- APPARITION DU TEXTE --- */
-  /* Le texte n'apparaît QUE quand la carte est survolée (agrandie) */
-  .expand-card:hover .expand-text {
     opacity: 1;
     transform: translateY(0);
-    white-space: normal; /* Autorise le retour à la ligne une fois grand */
+    white-space: normal;
   }
-  
-  .expand-card:hover .expand-icon {
-    transform: translateY(-5px);
-    color: var(--gold); /* Le numéro passe au doré */
+
+  .expand-card img {
+    filter: brightness(0.7);
   }
-  
-  
-  /* --- VERSION MOBILE --- */
-  @media (max-width: 900px) {
-    .expand-gallery {
-      flex-direction: column; /* On empile verticalement */
-      height: auto;
-      gap: 1.5rem;
-    }
-  
-    .expand-card {
-      width: 100%;
-      height: 300px; /* Hauteur fixe par carte */
-      flex: none !important; /* On désactive l'effet accordéon sur mobile */
-    }
-    
-    /* Sur mobile, on affiche tout le temps le texte */
-    .expand-text {
-      opacity: 1;
-      transform: translateY(0);
-      white-space: normal;
-    }
-    
-    .expand-card img {
-      filter: brightness(0.7);
-    }
-  }
+}
 
 /* --- Process Section (Correction Anti-Banding) --- */
 .section-process {
   /* On garde un fond noir uni ou très sombre, le bruit fera le reste */
-    background: radial-gradient(circle at center, #0f0f0f 0%, #050505 30%);
-  background-color: #050505; 
+  background: radial-gradient(circle at center, #0f0f0f 0%, #050505 30%);
+  background-color: #050505;
   position: relative;
   overflow: hidden;
   padding: 10rem 0;
-  
+
   /* On supprime l'ancien masque qui causait les traits */
   mask-image: none;
   -webkit-mask-image: none;
@@ -947,14 +960,27 @@ h3 {
 .process-steps-grid .step-card {
   animation: wave-ole 2.4s ease-in-out infinite;
 }
-.process-steps-grid .step-card:nth-child(1) { animation-delay: 0s; }
-.process-steps-grid .step-card:nth-child(3) { animation-delay: 0.8s; }
-.process-steps-grid .step-card:nth-child(5) { animation-delay: 1.6s; }
+.process-steps-grid .step-card:nth-child(1) {
+  animation-delay: 0s;
+}
+.process-steps-grid .step-card:nth-child(3) {
+  animation-delay: 0.8s;
+}
+.process-steps-grid .step-card:nth-child(5) {
+  animation-delay: 1.6s;
+}
 
 @keyframes wave-ole {
-  0%, 100% { transform: translateY(-8px); }
-  33% { transform: translateY(0); }
-  66% { transform: translateY(0); }
+  0%,
+  100% {
+    transform: translateY(-8px);
+  }
+  33% {
+    transform: translateY(0);
+  }
+  66% {
+    transform: translateY(0);
+  }
 }
 
 /* Sur téléphone : pas d'animation monter/descendre */
@@ -1499,7 +1525,7 @@ h3 {
   max-width: 350px;
 }
 
-.footer-col h4 {  
+.footer-col h4 {
   text-decoration: underline;
   text-underline-offset: 0.3rem;
 
@@ -1578,7 +1604,8 @@ h3 {
 .reveal {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.6s cubic-bezier(0.34, 1.2, 0.64, 1),
+  transition:
+    opacity 0.6s cubic-bezier(0.34, 1.2, 0.64, 1),
     transform 0.6s cubic-bezier(0.34, 1.2, 0.64, 1);
 }
 .reveal.active {
@@ -1590,26 +1617,46 @@ h3 {
 .why-grid > .reveal.active:nth-child(1),
 .services-grid > .reveal.active:nth-child(1),
 .process-steps-grid > .reveal.active:nth-child(1),
-.testimonials-grid > .reveal.active:nth-child(1) { transition-delay: 0s; }
+.testimonials-grid > .reveal.active:nth-child(1) {
+  transition-delay: 0s;
+}
 .why-grid > .reveal.active:nth-child(2),
 .services-grid > .reveal.active:nth-child(2),
 .process-steps-grid > .reveal.active:nth-child(2),
-.testimonials-grid > .reveal.active:nth-child(2) { transition-delay: 0.1s; }
+.testimonials-grid > .reveal.active:nth-child(2) {
+  transition-delay: 0.1s;
+}
 .why-grid > .reveal.active:nth-child(3),
 .services-grid > .reveal.active:nth-child(3),
 .process-steps-grid > .reveal.active:nth-child(3),
-.testimonials-grid > .reveal.active:nth-child(3) { transition-delay: 0.2s; }
+.testimonials-grid > .reveal.active:nth-child(3) {
+  transition-delay: 0.2s;
+}
 .why-grid > .reveal.active:nth-child(4),
 .services-grid > .reveal.active:nth-child(4),
-.testimonials-grid > .reveal.active:nth-child(4) { transition-delay: 0.3s; }
+.testimonials-grid > .reveal.active:nth-child(4) {
+  transition-delay: 0.3s;
+}
 .why-grid > .reveal.active:nth-child(5),
-.services-grid > .reveal.active:nth-child(5) { transition-delay: 0.4s; }
+.services-grid > .reveal.active:nth-child(5) {
+  transition-delay: 0.4s;
+}
 .why-grid > .reveal.active:nth-child(6),
-.services-grid > .reveal.active:nth-child(6) { transition-delay: 0.5s; }
-.services-grid > .reveal.active:nth-child(7) { transition-delay: 0.6s; }
-.services-grid > .reveal.active:nth-child(8) { transition-delay: 0.7s; }
-.process-steps-grid > .reveal.active:nth-child(4) { transition-delay: 0.3s; }
-.process-steps-grid > .reveal.active:nth-child(5) { transition-delay: 0.4s; }
+.services-grid > .reveal.active:nth-child(6) {
+  transition-delay: 0.5s;
+}
+.services-grid > .reveal.active:nth-child(7) {
+  transition-delay: 0.6s;
+}
+.services-grid > .reveal.active:nth-child(8) {
+  transition-delay: 0.7s;
+}
+.process-steps-grid > .reveal.active:nth-child(4) {
+  transition-delay: 0.3s;
+}
+.process-steps-grid > .reveal.active:nth-child(5) {
+  transition-delay: 0.4s;
+}
 
 /* --- Pastille contact sticky --- */
 .contact-pill {
@@ -1813,10 +1860,12 @@ h3 {
 
 /* Le petit cercle qui tourne */
 .btn.loading::after {
-  content: '';
+  content: "";
   position: absolute;
-  left: 50%; top: 50%;
-  width: 20px; height: 20px;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 20px;
   border: 2px solid #000; /* Couleur du trait */
   border-top-color: transparent; /* Pour faire l'effet de rotation */
   border-radius: 50%;
@@ -1825,7 +1874,9 @@ h3 {
 }
 
 @keyframes spin {
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 /* 2. La Notification (Toast) */
@@ -1843,13 +1894,13 @@ h3 {
   align-items: flex-start;
   max-width: 400px;
   z-index: 10000;
-  
+
   /* Caché par défaut */
   opacity: 0;
   transform: translateY(20px);
   visibility: hidden;
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Effet "Rebond" */
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
 /* Quand la notif apparaît */
@@ -1862,7 +1913,8 @@ h3 {
 .toast-icon {
   background: var(--primary);
   color: #000;
-  width: 32px; height: 32px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1881,7 +1933,7 @@ h3 {
   font-size: 0.85rem;
   color: var(--text-muted);
   line-height: 1.4;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   padding: 0.5rem;
   border-radius: 8px;
   margin-top: 5px;
@@ -1992,7 +2044,9 @@ h3 {
   padding: 2rem;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
 }
 
 .image-modal.open {
@@ -2029,14 +2083,18 @@ h3 {
   height: 140px;
   border-radius: 50%;
   border: 3px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
   pointer-events: none;
   z-index: 10001;
   transform: translate(-50%, -50%);
   background-repeat: no-repeat;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.15s ease, visibility 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease;
 }
 
 .image-modal-magnifier.visible {
@@ -2097,7 +2155,9 @@ body.modal-magnifier-active .custom-cursor {
   line-height: 1;
   cursor: pointer;
   border-radius: 50%;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2124,138 +2184,138 @@ body.modal-magnifier-active .custom-cursor {
    SECTION À PROPOS (About Us)
    ============================================ */
 
-   .section-about {
-    position: relative;
-    /* Pas de background ici = transparent, donc on voit les étoiles */
-  }
-  
+.section-about {
+  position: relative;
+  /* Pas de background ici = transparent, donc on voit les étoiles */
+}
+
+.about-grid {
+  margin-top: -1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
   .about-grid {
-    margin-top: -1rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 4rem;
-    align-items: center;
+    grid-template-columns: 1.1fr 0.9fr; /* Plus de place pour le texte */
   }
-  
-  @media (min-width: 900px) {
-    .about-grid {
-      grid-template-columns: 1.1fr 0.9fr; /* Plus de place pour le texte */
-    }
-  }
+}
 
-  .about-text-body {
-    text-align: left;
-  }
-  
-  /* Typographie du texte */
-  .about-text-body p {
-    color: var(--text-muted);
-    font-size: 1.05rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.8;
-  }
-  
-  .about-text-body strong {
-    color: #fff;
-    font-weight: 600;
-  }
-  
-  .highlight-p {
-    font-size: 1.25rem !important;
-    color: #fff !important;
-    font-weight: 500;
-    border-left: 3px solid var(--primary);
-    padding-left: 1.5rem;
-  }
-  
-  .text-gold {
-    color: var(--gold);
-    font-weight: 600;
-  }
-  
-  /* Citation finale style signature */
-  .about-quote {
-    margin-top: 2rem;
-    font-family: serif; /* Police différente pour le style */
-    font-size: 1.12rem;
-    color: #fff;
-    font-style: italic;
-    opacity: 0.9;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 1rem;
-    border-radius: var(--radius);
-    border: 1px solid var(--glass-border);
-  }
-  
-  /* Image Wrapper */
-  .about-image-wrapper {
-    position: relative;
-  }
-  
+.about-text-body {
+  text-align: left;
+}
+
+/* Typographie du texte */
+.about-text-body p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.about-text-body strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.highlight-p {
+  font-size: 1.25rem !important;
+  color: #fff !important;
+  font-weight: 500;
+  border-left: 3px solid var(--primary);
+  padding-left: 1.5rem;
+}
+
+.text-gold {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* Citation finale style signature */
+.about-quote {
+  margin-top: 2rem;
+  font-family: serif; /* Police différente pour le style */
+  font-size: 1.12rem;
+  color: #fff;
+  font-style: italic;
+  opacity: 0.9;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-border);
+}
+
+/* Image Wrapper */
+.about-image-wrapper {
+  position: relative;
+}
+
+.about-image-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--glass-border);
+  transform: rotate(2deg); /* Petite rotation stylée */
+  transition: transform 0.5s ease;
+}
+
+.about-image-card:hover {
+  transform: rotate(0deg) scale(1.02);
+  border-color: var(--gold);
+}
+
+.about-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: grayscale(20%) contrast(1.1); /* Look premium */
+}
+
+/* Badge flottant sur l'image */
+.about-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(5, 5, 5, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 0.75rem 1.25rem;
+  border-radius: 50px;
+  border: 1px solid var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.badge-icon {
+  color: var(--gold);
+  font-size: 1.2rem;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 900px) {
   .about-image-card {
-    position: relative;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    border: 1px solid var(--glass-border);
-    transform: rotate(2deg); /* Petite rotation stylée */
-    transition: transform 0.5s ease;
+    transform: rotate(0deg);
+    max-height: 300px;
   }
-  
-  .about-image-card:hover {
-    transform: rotate(0deg) scale(1.02);
-    border-color: var(--gold);
-  }
-  
   .about-img {
+    height: 300px;
     width: 100%;
-    height: auto;
-    display: block;
-    filter: grayscale(20%) contrast(1.1); /* Look premium */
+    object-fit: cover;
   }
-  
-  /* Badge flottant sur l'image */
-  .about-badge {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    background: rgba(5, 5, 5, 0.85);
-    backdrop-filter: blur(10px);
-    padding: 0.75rem 1.25rem;
-    border-radius: 50px;
-    border: 1px solid var(--gold);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #fff;
-    font-size: 0.9rem;
-    font-weight: 600;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  .highlight-p {
+    padding-left: 1rem;
+    font-size: 1.1rem !important;
   }
-  
-  .badge-icon {
-    color: var(--gold);
-    font-size: 1.2rem;
-  }
-  
-  /* Mobile responsive adjustments */
-  @media (max-width: 900px) {
-    .about-image-card {
-      transform: rotate(0deg);
-      max-height: 300px;
-    }
-    .about-img {
-      height: 300px;
-      width: 100%;
-      object-fit: cover;
-    }
-    .highlight-p {
-      padding-left: 1rem;
-      font-size: 1.1rem !important;
-    }
-  }
+}
 
-  /* ============================================
+/* ============================================
    FAQ SECTION (Accordéon)
    ============================================ */
 
@@ -2281,7 +2341,10 @@ body.modal-magnifier-active .custom-cursor {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   overflow: hidden;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
   position: relative;
   border-left: 3px solid transparent;
 }
@@ -2342,7 +2405,10 @@ body.modal-magnifier-active .custom-cursor {
   color: var(--primary);
   background: rgba(0, 210, 106, 0.15);
   border-radius: 8px;
-  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease;
 }
 
 .faq-icon::before {
@@ -2381,9 +2447,12 @@ body.modal-magnifier-active .custom-cursor {
   line-height: 1.75;
   font-size: 0.95rem;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
+  opacity: 0;
+  transition: opacity 0.7s ease 0.1s;
 }
 
 .faq-item.faq-open .faq-content {
+  opacity: 1;
   border-top-color: rgba(0, 210, 106, 0.15);
 }
 
