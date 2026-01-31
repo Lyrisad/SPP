@@ -3,11 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SPP Nettoyage | Nettoyage professionnel Haute-Normandie – Bureaux, entreprises, particuliers</title>
     <meta
       name="description"
-      content="SPP - Nettoyage professionnel pour particuliers et entreprises. Bureaux, immeubles, logements. Devis gratuit sous 24h."
+      content="SPP Nettoyage (SPP-nettoyage) : nettoyage professionnel en Haute-Normandie. Bureaux, immeubles, logements, fin de chantier, débarras. Devis gratuit sous 24h."
     />
-    <title>SPP – L'Expertise Propreté | Particuliers & Entreprises</title>
+    <meta name="keywords" content="spp, SPP, SPP Nettoyage, SPP-nettoyage, nettoyage professionnel, nettoyage Haute-Normandie, nettoyage bureaux, nettoyage entreprises, nettoyage immeubles, fin de chantier, propreté Normandie, société de nettoyage" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="SPP Nettoyage" />
+    <meta name="geo.region" content="FR-28" />
+    <link rel="canonical" href="https://www.spp-nettoyage.com/home.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="SPP Nettoyage" />
+    <meta property="og:title" content="SPP Nettoyage | Nettoyage professionnel Haute-Normandie" />
+    <meta property="og:description" content="Nettoyage professionnel en Haute-Normandie. Bureaux, immeubles, logements, fin de chantier. Devis gratuit sous 24h." />
+    <meta property="og:url" content="https://www.spp-nettoyage.com/home.html" />
+    <meta property="og:image" content="https://www.spp-nettoyage.com/images/SPP-Logo.PNG" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="SPP Nettoyage | Nettoyage professionnel Haute-Normandie" />
+    <meta name="twitter:description" content="Nettoyage professionnel en Haute-Normandie. Bureaux, immeubles, logements. Devis gratuit sous 24h." />
+
+    <link rel="icon" href="images/SPP-Logo.PNG" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,6 +36,36 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+
+    <!-- Données structurées JSON-LD (LocalBusiness) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "SPP Nettoyage",
+      "alternateName": ["SPP-nettoyage", "SPP Nettoyage Normandie"],
+      "description": "Nettoyage professionnel pour particuliers et entreprises en Haute-Normandie. Bureaux, immeubles, logements, fin de chantier, débarras et encombrants.",
+      "url": "https://www.spp-nettoyage.com/home.html",
+      "telephone": "+33783492828",
+      "email": "SPP.normandie@gmail.com",
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": { "@type": "GeoCoordinates", "latitude": 49.4333, "longitude": 1.0833 },
+        "geoRadius": "50000",
+        "name": "Haute-Normandie"
+      },
+      "serviceType": ["Nettoyage professionnel", "Nettoyage de bureaux", "Nettoyage d'immeubles", "Fin de chantier", "Débarras"],
+      "priceRange": "€€",
+      "image": "https://www.spp-nettoyage.com/images/SPP-Logo.PNG",
+      "sameAs": [],
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "08:00",
+        "closes": "18:00"
+      }
+    }
+    </script>
   </head>
   <body>
     <div class="preloader">
@@ -75,7 +126,7 @@
           <h1 class="hero-title">
             <img
               src="images/SPP-Logo-White-cropped.png"
-              alt="SPP"
+              alt="SPP Nettoyage"
               class="hero-logo-inline"
             />
             là où <span class="hero-keyword">chaque détail</span> compte, la
@@ -945,8 +996,8 @@
         <div class="footer-bottom">
           <p>© 2026 SPP Nettoyage. Tous droits réservés.</p>
           <div class="legal-links">
-            <a href="#">Mentions Légales</a>
-            <a href="#">Confidentialité</a>
+            <a href="mentions-legales.html">Mentions légales</a>
+            <a href="confidentialite.html">Confidentialité</a>
           </div>
         </div>
       </div>
@@ -1014,6 +1065,22 @@
         <div id="toast-summary"></div>
       </div>
     </div>
+    <!-- Modal lightbox pour les images -->
+    <div class="image-modal" id="image-modal" role="dialog" aria-modal="true" aria-label="Agrandir l'image">
+      <button class="image-modal-close" type="button" aria-label="Fermer">&times;</button>
+      <div class="image-modal-overlay"></div>
+      <div class="image-modal-content">
+        <div class="image-modal-img-wrap" id="modal-img-wrap">
+          <img src="" alt="" class="image-modal-img" />
+          <div class="image-modal-magnifier" id="modal-magnifier" aria-hidden="true"></div>
+          <div class="image-modal-caption">
+            <h3 class="image-modal-title"></h3>
+            <p class="image-modal-desc"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>

@@ -1,0 +1,37 @@
+═══════════════════════════════════════════════════════════
+  CONFIGURATION SEO - SPP Nettoyage
+═══════════════════════════════════════════════════════════
+
+Domaine configuré : https://www.spp-nettoyage.com
+
+Si vous changez de domaine, remplacez "spp-nettoyage.com" dans :
+
+  • home.html        (canonical, og:url, og:image, JSON-LD)
+  • mentions-legales.html (canonical)
+  • confidentialite.html  (canonical)
+  • robots.txt       (Sitemap URL)
+  • sitemap.xml      (toutes les balises <loc>)
+
+═══════════════════════════════════════════════════════════
+  ÉLÉMENTS SEO MIS EN PLACE
+═══════════════════════════════════════════════════════════
+
+✓ Meta title optimisé (SPP Nettoyage, SPP-nettoyage, Haute-Normandie)
+✓ Meta description avec mots-clés
+✓ Meta keywords
+✓ Canonical URLs
+✓ Open Graph (partage réseaux sociaux)
+✓ Twitter Card
+✓ Données structurées JSON-LD (LocalBusiness)
+✓ robots.txt
+✓ sitemap.xml
+✓ Balises alt sur les images
+
+═══════════════════════════════════════════════════════════
+  MOTS-CLÉS CIBLÉS
+═══════════════════════════════════════════════════════════
+
+SPP Nettoyage, SPP-nettoyage, nettoyage professionnel,
+nettoyage Haute-Normandie, nettoyage bureaux, nettoyage 
+entreprises, nettoyage immeubles, fin de chantier,
+propreté Normandie, société de nettoyage

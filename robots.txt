@@ -1,0 +1,8 @@
+# Robots.txt pour SPP Nettoyage (SPP-nettoyage)
+# https://www.spp-nettoyage.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.spp-nettoyage.com/sitemap.xml

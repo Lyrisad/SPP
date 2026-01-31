@@ -46,6 +46,43 @@ body {
   overflow-x: hidden;
 }
 
+/* --- Scrollbar personnalisée (match Design System) --- */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) rgba(255, 255, 255, 0.06);
+}
+
+/* Webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  margin: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 0 10px rgba(0, 210, 106, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00e673, var(--primary));
+  background-clip: padding-box;
+  box-shadow: 0 0 15px rgba(0, 210, 106, 0.5);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 /* Curseur personnalisé : petit rond vert (souris uniquement) */
 @media (pointer: fine) {
   body {
@@ -394,6 +431,14 @@ h3 {
 .nav-cta {
   color: var(--primary) !important;
   font-weight: 700 !important;
+}
+
+.nav-cta:hover {
+  color: var(--primary-dark) !important;
+}
+
+.nav-cta:hover::after {
+  display: none;
 }
 
 /* --- Burger --- */
@@ -889,10 +934,23 @@ h3 {
 }
 
 .step-card:hover {
-  transform: translateY(-5px);
   background: rgba(255, 255, 255, 0.05);
   border-color: rgba(0, 210, 106, 0.3);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Vague "Holé" infinie sur les 3 étapes */
+.process-steps-grid .step-card {
+  animation: wave-ole 2.4s ease-in-out infinite;
+}
+.process-steps-grid .step-card:nth-child(1) { animation-delay: 0s; }
+.process-steps-grid .step-card:nth-child(3) { animation-delay: 0.8s; }
+.process-steps-grid .step-card:nth-child(5) { animation-delay: 1.6s; }
+
+@keyframes wave-ole {
+  0%, 100% { transform: translateY(-8px); }
+  33% { transform: translateY(0); }
+  66% { transform: translateY(0); }
 }
 
 /* Numéro en gros (Watermark style) */
@@ -1508,13 +1566,39 @@ h3 {
 /* --- Animations --- */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease-out;
+  transform: translateY(40px);
+  transition: opacity 0.6s cubic-bezier(0.34, 1.2, 0.64, 1),
+    transform 0.6s cubic-bezier(0.34, 1.2, 0.64, 1);
 }
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Effet "Holééé" : les cadres se lèvent en cascade, un par un */
+.why-grid > .reveal.active:nth-child(1),
+.services-grid > .reveal.active:nth-child(1),
+.process-steps-grid > .reveal.active:nth-child(1),
+.testimonials-grid > .reveal.active:nth-child(1) { transition-delay: 0s; }
+.why-grid > .reveal.active:nth-child(2),
+.services-grid > .reveal.active:nth-child(2),
+.process-steps-grid > .reveal.active:nth-child(2),
+.testimonials-grid > .reveal.active:nth-child(2) { transition-delay: 0.1s; }
+.why-grid > .reveal.active:nth-child(3),
+.services-grid > .reveal.active:nth-child(3),
+.process-steps-grid > .reveal.active:nth-child(3),
+.testimonials-grid > .reveal.active:nth-child(3) { transition-delay: 0.2s; }
+.why-grid > .reveal.active:nth-child(4),
+.services-grid > .reveal.active:nth-child(4),
+.testimonials-grid > .reveal.active:nth-child(4) { transition-delay: 0.3s; }
+.why-grid > .reveal.active:nth-child(5),
+.services-grid > .reveal.active:nth-child(5) { transition-delay: 0.4s; }
+.why-grid > .reveal.active:nth-child(6),
+.services-grid > .reveal.active:nth-child(6) { transition-delay: 0.5s; }
+.services-grid > .reveal.active:nth-child(7) { transition-delay: 0.6s; }
+.services-grid > .reveal.active:nth-child(8) { transition-delay: 0.7s; }
+.process-steps-grid > .reveal.active:nth-child(4) { transition-delay: 0.3s; }
+.process-steps-grid > .reveal.active:nth-child(5) { transition-delay: 0.4s; }
 
 /* --- Pastille contact sticky --- */
 .contact-pill {
@@ -1794,4 +1878,233 @@ h3 {
 
 .toast-recap strong {
   color: var(--primary);
+}
+
+/* --- Pages légales (Mentions, Confidentialité) --- */
+.legal-page .preloader,
+.legal-page .scroll-progress,
+.legal-page .particles-canvas,
+.legal-page .background-fx {
+  display: none !important;
+}
+
+.legal-main {
+  padding: 8rem 0 4rem;
+  min-height: 70vh;
+}
+
+.legal-container {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.legal-back {
+  display: inline-block;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.legal-back:hover {
+  color: var(--primary);
+}
+
+.legal-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.legal-updated {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 3rem;
+}
+
+.legal-content {
+  color: var(--text-main);
+  line-height: 1.75;
+}
+
+.legal-section {
+  margin-bottom: 2.5rem;
+}
+
+.legal-section h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.legal-section p {
+  margin-bottom: 1rem;
+  color: var(--text-muted);
+}
+
+.legal-section p:last-child {
+  margin-bottom: 0;
+}
+
+.legal-section ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+  color: var(--text-muted);
+}
+
+.legal-section li {
+  margin-bottom: 0.5rem;
+}
+
+.legal-section a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.legal-section a:hover {
+  text-decoration: underline;
+}
+
+/* --- Modal lightbox pour les images --- */
+.image-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.image-modal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.image-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  cursor: pointer;
+}
+
+.image-modal-content {
+  position: relative;
+  z-index: 1;
+  max-width: 90vw;
+  max-height: 90vh;
+  animation: modalZoomIn 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+.image-modal-img-wrap {
+  position: relative;
+  cursor: none;
+}
+
+.image-modal-magnifier {
+  position: fixed;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  z-index: 10001;
+  transform: translate(-50%, -50%);
+  background-repeat: no-repeat;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+}
+
+.image-modal-magnifier.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.modal-magnifier-active .custom-cursor {
+  opacity: 0 !important;
+}
+
+.image-modal-img {
+  display: block;
+  max-width: 100%;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.image-modal-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.image-modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+
+.image-modal-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.image-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.image-modal-close:hover {
+  background: var(--primary);
+  color: #000;
+}
+
+@keyframes modalZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

@@ -8,15 +8,21 @@
 
   // --- NOUVEAU : 0. Gestion du Preloader ---
 
-  // On bloque le scroll immédiatement
-  document.body.classList.add("is-loading");
+  const isLegalPage = document.body.classList.contains("legal-page");
+  if (!isLegalPage) document.body.classList.add("is-loading");
 
   const preloader = document.querySelector(".preloader");
   const header = document.querySelector(".header");
   const contactPill = document.getElementById("contact-pill");
 
+  if (isLegalPage) {
+    document.body.classList.remove("is-loading");
+    if (header) header.classList.add("header-visible");
+  }
+
   // window.addEventListener('load') attend que TOUT soit chargé (images, CSS...)
   window.addEventListener("load", () => {
+    if (isLegalPage) return;
     // On attend un peu pour être sûr que la barre de chargement est visuellement finie (timing esthétique)
     setTimeout(() => {
       // 1. On fait monter le rideau
@@ -324,6 +330,93 @@ if (form) {
 
     cursor.style.left = "0px";
     cursor.style.top = "0px";
+  })();
+
+  // --- 7. Modal lightbox pour les images de la galerie ---
+  (function initImageModal() {
+    const modal = document.getElementById("image-modal");
+    const modalImg = modal?.querySelector(".image-modal-img");
+    const imgWrap = document.getElementById("modal-img-wrap");
+    const magnifier = document.getElementById("modal-magnifier");
+    const modalTitle = modal?.querySelector(".image-modal-title");
+    const modalDesc = modal?.querySelector(".image-modal-desc");
+    const overlay = modal?.querySelector(".image-modal-overlay");
+    const closeBtn = modal?.querySelector(".image-modal-close");
+    const galleryImages = document.querySelectorAll(".expand-gallery .expand-card img");
+
+    const ZOOM = 2.5;
+    const MAGNIFIER_SIZE = 140;
+
+    if (!modal || !modalImg) return;
+
+    function openModal(src, alt, title, desc) {
+      modalImg.src = src;
+      modalImg.alt = alt || "";
+      if (modalTitle) modalTitle.textContent = title || "";
+      if (modalDesc) modalDesc.textContent = desc || "";
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+      if (magnifier) magnifier.classList.remove("visible");
+    }
+
+    function closeModal() {
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+      document.body.classList.remove("modal-magnifier-active");
+      if (magnifier) magnifier.classList.remove("visible");
+    }
+
+    function updateMagnifier(e) {
+      if (!magnifier || !imgWrap || !modal.classList.contains("open")) return;
+      const rect = modalImg.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (x < 0 || x > rect.width || y < 0 || y > rect.height) {
+        magnifier.classList.remove("visible");
+        document.body.classList.remove("modal-magnifier-active");
+        return;
+      }
+      magnifier.classList.add("visible");
+      document.body.classList.add("modal-magnifier-active");
+      magnifier.style.left = e.clientX + "px";
+      magnifier.style.top = e.clientY + "px";
+      magnifier.style.backgroundImage = `url(${modalImg.src})`;
+      magnifier.style.backgroundSize = `${rect.width * ZOOM}px ${rect.height * ZOOM}px`;
+      const bgX = (x / rect.width) * (rect.width * ZOOM) - MAGNIFIER_SIZE / 2;
+      const bgY = (y / rect.height) * (rect.height * ZOOM) - MAGNIFIER_SIZE / 2;
+      magnifier.style.backgroundPosition = `${-bgX}px ${-bgY}px`;
+    }
+
+    if (imgWrap && magnifier) {
+      imgWrap.addEventListener("mousemove", updateMagnifier);
+      imgWrap.addEventListener("mouseleave", () => {
+        magnifier?.classList.remove("visible");
+        document.body.classList.remove("modal-magnifier-active");
+      });
+    }
+
+    galleryImages.forEach((img) => {
+      img.style.cursor = "pointer";
+      img.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const card = img.closest(".expand-card");
+        const titleEl = card?.querySelector(".expand-text h3");
+        const descEl = card?.querySelector(".expand-text p");
+        openModal(
+          img.src,
+          img.alt,
+          titleEl?.textContent?.trim() || "",
+          descEl?.textContent?.trim() || ""
+        );
+      });
+    });
+
+    if (overlay) overlay.addEventListener("click", closeModal);
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
+    });
   })();
   
 })();
