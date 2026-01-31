@@ -489,6 +489,10 @@ h3 {
   max-width: 700px;
 }
 
+.bold-description {
+  font-weight: 700;
+}
+
 .badge {
   display: inline-block;
   padding: 0.4rem 1rem;
