@@ -1724,7 +1724,7 @@ h3 {
   position: absolute;
   bottom: calc(56px + 0.75rem);
   right: 0;
-  width: 280px;
+  width: 300px;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
@@ -1775,7 +1775,16 @@ h3 {
 }
 
 .contact-pill-link-icon {
-  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+
+.contact-pill-link-icon svg {
+  width: 18px;
+  height: 18px;
 }
 
 .contact-pill-zone {
@@ -1783,7 +1792,7 @@ h3 {
   padding-top: 0.75rem;
   border-top: 1px solid var(--glass-border);
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: var(--primary-dark);
 }
 
 /* --- Mobile Responsiveness --- */
@@ -2218,6 +2227,15 @@ body.modal-magnifier-active .custom-cursor {
 .about-text-body strong {
   color: #fff;
   font-weight: 600;
+}
+
+/* Logo inline dans le texte (ex: "Notre histoire") */
+.inline-logo {
+  display: inline-block;
+  height: 1.1em;
+  width: auto;
+  vertical-align: middle;
+  margin: 0 0.15em 0 0;
 }
 
 .highlight-p {
