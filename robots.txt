@@ -1,9 +1,9 @@
 # Robots.txt pour SPP Nettoyage
-# Site : https://www.spp-nettoyage.com
+# Site : https://spp-nettoyage.com
 # Email : contact@spp.nettoyage.com
 
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://www.spp-nettoyage.com/sitemap.xml
+Sitemap: https://spp-nettoyage.com/sitemap.xml
