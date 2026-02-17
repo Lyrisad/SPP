@@ -2,7 +2,7 @@
   CONFIGURATION SEO - SPP Nettoyage
 ═══════════════════════════════════════════════════════════
 
-Domaine configuré : https://www.spp-nettoyage.com
+Domaine configuré : https://spp-nettoyage.com
 
 Si vous changez de domaine, remplacez "spp-nettoyage.com" dans :
 
