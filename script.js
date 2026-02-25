@@ -117,7 +117,7 @@ if (form) {
     
     try {
       // 2. ENVOI VERS FORMSUBMIT
-      const response = await fetch("https://formsubmit.co/ajax/pharisidharyl_10@yahoo.fr", { 
+      const response = await fetch("https://formsubmit.co/ajax/spp.normandie@gmail.com", { 
         method: "POST",
         body: JSON.stringify(Object.fromEntries(formData)),
         headers: { 
