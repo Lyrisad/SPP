@@ -116,11 +116,14 @@ if (form) {
     const clientPhone = formData.get('Telephone'); // Correspond au name="Telephone"
     
     try {
-      // 2. ENVOI VERS FORMSPREE
-      const response = await fetch("https://formspree.io/f/xdazyyee", { 
+      // 2. ENVOI VERS FORMSUBMIT
+      const response = await fetch("https://formsubmit.co/ajax/pharisidharyl_10@yahoo.fr", { 
         method: "POST",
-        body: formData,
-        headers: { 'Accept': 'application/json' }
+        body: JSON.stringify(Object.fromEntries(formData)),
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json' 
+        }
       });
 
       if (response.ok) {
@@ -159,7 +162,7 @@ if (form) {
         }, 6000);
 
       } else {
-        throw new Error('Erreur Formspree');
+        throw new Error('Erreur envoi formulaire');
       }
 
     } catch (error) {
