@@ -28,10 +28,10 @@
     const hasCountdownEls = !!(daysEl && hoursEl && minutesEl && secondsEl);
     if (!hasCountdownEls) return;
 
-    const KEY = "spp_unpaid_end_ts";
+    const KEY = "spp_unpaid_end_ts_10d";
     const now = Date.now();
     const stored = Number(localStorage.getItem(KEY));
-    const defaultEnd = now + 3 * 24 * 60 * 60 * 1000;
+    const defaultEnd = now + 10 * 24 * 60 * 60 * 1000;
     const endTs = Number.isFinite(stored) && stored > now ? stored : defaultEnd;
     localStorage.setItem(KEY, String(endTs));
 
