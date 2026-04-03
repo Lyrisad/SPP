@@ -2070,6 +2070,120 @@ h3 {
   text-decoration: underline;
 }
 
+/* ============================================
+   UNPAID MODE (blur + overlay)
+   ============================================ */
+
+.unpaid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: rgba(78, 2, 2, 0.688);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 200ms ease, visibility 200ms ease;
+}
+
+.unpaid-overlay-inner {
+  width: min(520px, 92vw);
+  border-radius: 18px;
+  padding: 2.25rem 2rem;
+  text-align: center;
+  background: rgba(18, 18, 18, 0.933);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.65);
+}
+
+.unpaid-label {
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.75rem;
+  background: red;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+  font-size: clamp(1.6rem, 4vw, 2.15rem);
+}
+
+.unpaid-letter {
+  font-weight: 900;
+  line-height: 1;
+  color: #fff;
+  font-size: clamp(4.5rem, 10vw, 7rem);
+  text-shadow: 0 12px 30px rgba(0, 0, 0, 0.65);
+}
+
+.unpaid-desc {
+  margin: 0.35rem 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.unpaid-desc-strong {
+  margin-top: 0.75rem;
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 700;
+}
+
+.unpaid-countdown {
+  margin-top: 1.25rem;
+}
+
+.unpaid-countdown-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.unpaid-time {
+  border-radius: 14px;
+  padding: 0.9rem 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.unpaid-time-value {
+  font-weight: 900;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.unpaid-time-label {
+  margin-top: 0.15rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+@media (max-width: 520px) {
+  .unpaid-countdown-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* When unpaid, blur everything behind overlay */
+body.unpaid > :not(.unpaid-overlay) {
+  filter: blur(10px) saturate(0.8);
+  transform: translateZ(0);
+}
+
+body.unpaid {
+  overflow: hidden;
+}
+
+body.unpaid .unpaid-overlay {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
 /* --- Modal lightbox pour les images --- */
 .image-modal {
   position: fixed;
