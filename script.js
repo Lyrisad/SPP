@@ -28,12 +28,8 @@
     const hasCountdownEls = !!(daysEl && hoursEl && minutesEl && secondsEl);
     if (!hasCountdownEls) return;
 
-    const KEY = "spp_unpaid_end_ts_7d";
-    const now = Date.now();
-    const stored = Number(localStorage.getItem(KEY));
-    const defaultEnd = now + 7 * 24 * 60 * 60 * 1000;
-    const endTs = Number.isFinite(stored) && stored > now ? stored : defaultEnd;
-    localStorage.setItem(KEY, String(endTs));
+    // Date fixe : vendredi 10 avril 2026, midi (Europe/Paris, CEST)
+    const endTs = new Date("2026-04-10T12:00:00+02:00").getTime();
 
     const pad2 = (n) => String(n).padStart(2, "0");
 
