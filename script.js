@@ -6,52 +6,6 @@
 (function () {
   "use strict";
 
-  // --- UNPAID GATE (blur everything) ---
-  // Default: unpaid ON. To bypass (paid): add ?paid=1 to the URL
-  (function initUnpaidGate() {
-    const params = new URLSearchParams(window.location.search);
-    const paidParam = params.get("paid");
-    const isPaid = paidParam === "1" || paidParam === "true";
-
-    document.body.classList.toggle("unpaid", !isPaid);
-
-    const overlay = document.getElementById("unpaid-overlay");
-    if (overlay) overlay.setAttribute("aria-hidden", String(isPaid));
-
-    if (isPaid) return;
-
-    const daysEl = document.getElementById("unpaid-days");
-    const hoursEl = document.getElementById("unpaid-hours");
-    const minutesEl = document.getElementById("unpaid-minutes");
-    const secondsEl = document.getElementById("unpaid-seconds");
-
-    const hasCountdownEls = !!(daysEl && hoursEl && minutesEl && secondsEl);
-    if (!hasCountdownEls) return;
-
-    // Date fixe : vendredi 10 avril 2026, midi (Europe/Paris, CEST)
-    const endTs = new Date("2026-04-10T12:00:00+02:00").getTime();
-
-    const pad2 = (n) => String(n).padStart(2, "0");
-
-    function renderCountdown() {
-      const remainingMs = Math.max(0, endTs - Date.now());
-      const totalSeconds = Math.floor(remainingMs / 1000);
-
-      const days = Math.floor(totalSeconds / 86400);
-      const hours = Math.floor((totalSeconds % 86400) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-
-      daysEl.textContent = String(days);
-      hoursEl.textContent = pad2(hours);
-      minutesEl.textContent = pad2(minutes);
-      secondsEl.textContent = pad2(seconds);
-    }
-
-    renderCountdown();
-    setInterval(renderCountdown, 1000);
-  })();
-
   // --- NOUVEAU : 0. Gestion du Preloader ---
 
   const isLegalPage = document.body.classList.contains("legal-page");
